@@ -14,14 +14,18 @@ def main():
 	career_dataframe.show()
 	grade_dataframe.show()
 
-	joint_df = join_dataframes(students_dataframe,career_dataframe,grade_dataframe)
+	
+	joint_students_careers = join_dataframes_one_column(students_dataframe,career_dataframe,students_dataframe.career,career_dataframe.career_name)
+	joint_students_careers_grades = join_dataframes_two_columns(joint_students_careers,grade_dataframe,joint_students_careers.student_id,grade.student_id,joint_students_careers.career_id,grade.career_id)
 
 
-def join_dataframes(students,career,grade):
-	joint_df = students.join(career, students.career == career.career_name)
-	joint_df = joint_df.join(grade, (joint_df.career_id == grade.career_id) & (joint_df.student_id== grade.student_id))
+def join_dataframes_one_column(left,right, column_left, column_right):
+	joint_df = left.join(right, column_left == column_right,how='inner')
 	return joint_df
 
+def join_dataframes_two_columns(left,right, column_left1, column_right1, column_left2,column_right2):
+	joint_df = left.join(right, (column_left1 == column_right1) & (column_left2== column_right2), how='left')
+	return joint_df
 
 
 	
