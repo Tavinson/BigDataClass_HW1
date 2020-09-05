@@ -1,15 +1,18 @@
-from pyspark.sql.types import (IntegerType, FloatType, StructField,
+from pyspark.sql import SparkSession
+from pyspark.sql.types import (IntegerType, FloatType, StringType, StructField,
                                StructType, TimestampType)
 						   
+spark = SparkSession.builder.appName("Read CSV").getOrCreate()
+
 def read_csv():
 	csv_students = StructType([StructField('student_id', IntegerType()),
-                         StructField('name', String()),
-                         StructField('career', String()),
+                         StructField('name', StringType()),
+                         StructField('career', StringType()),
                          ])
 
 	csv_career = StructType([StructField('career_id', IntegerType()),
                          StructField('credits', IntegerType()),
-                         StructField('career_name', String()),
+                         StructField('career', StringType()),
                          ])
 
 	csv_grade = StructType([StructField('student_id', IntegerType()),
